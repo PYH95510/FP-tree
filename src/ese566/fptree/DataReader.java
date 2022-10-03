@@ -31,6 +31,7 @@ public class DataReader {
 					// Remove enclosing quotes
 					transactionIDStr = transactionIDStr.replace("\"", "");
 					curTransactionID = Integer.parseInt(transactionIDStr);
+					transactions.put(curTransactionID, new ArrayList<Integer>());
 				}
 				else if (typeStr.equals("V")) { // If line is an item for a transaction ("V")
 					if (curTransactionID < 0) {
@@ -42,7 +43,7 @@ public class DataReader {
 					int attribID = Integer.parseInt(st.nextToken());
 					attribCount.put(attribID, attribCount.getOrDefault(attribID, 0) + 1);
 
-					var itemset = transactions.getOrDefault(curTransactionID, new ArrayList<Integer>());
+					var itemset = transactions.get(curTransactionID);
 					itemset.add(attribID);
 				}
 				line = reader.readLine();
