@@ -7,14 +7,14 @@ import java.util.HashMap;
 import java.util.StringTokenizer;
 
 public class DataReader {
-	// <Attribute ID, Count>
-	static HashMap<Integer, Integer> attribCount = new HashMap<Integer, Integer>();
-	// <Transaction ID, <Attribute ID>>
-	static HashMap<Integer, ArrayList<Integer>> transactions = new HashMap<>();
+	public static DataSet readNetDFile(String fileName) {
+		// <Attribute ID, Count>
+		HashMap<Integer, Integer> attribCount = new HashMap<Integer, Integer>();
+		// <Transaction ID, <Attribute ID>>
+		HashMap<Integer, ArrayList<Integer>> transactions = new HashMap<>();
 
-	public static void readNetDFile(String fileName) {
 		BufferedReader reader = null;
-
+		boolean complete = true;
 		try {
 			reader = new BufferedReader(new FileReader(fileName));
 			String line;
@@ -36,7 +36,7 @@ public class DataReader {
 					if (curTransactionID < 0) {
 						// This shouldn't happen. All "V" should always come after "C" and therefore
 						// curTransactionID should always be initialized
-						throw new RuntimeException("Data is incorrectly formatted");
+						throw new IllegalArgumentException("Data is incorrectly formatted");
 					}
 					// Attribute ID
 					int attribID = Integer.parseInt(st.nextToken());
@@ -49,12 +49,18 @@ public class DataReader {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+			complete = false;
 		} finally {
 			try {
 				reader.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}
+		if (complete) {
+			return new DataSet(attribCount, transactions);
+		} else {
+			return null;
 		}
 	}
 }
