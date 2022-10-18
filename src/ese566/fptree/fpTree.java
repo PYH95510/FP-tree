@@ -16,10 +16,12 @@ public class fpTree {
     }
 
     public void generateTree(DataSet item) {
+        if (tree.size() == 0) {
 
-        for (HashMap.Entry<Integer, ArrayList<Integer>> ent : itemset.entrySet()) {
+            for (HashMap.Entry<Integer, ArrayList<Integer>> ent : item.m_transactions.entrySet()) {
 
-        } // for every entry in the itemsets
+            }
+        }
 
     }
 
@@ -27,6 +29,7 @@ public class fpTree {
 
         if (tree.size() == 0) {
             // if size 0 or not previously existed tree nodes, add it
+            tree.add();
         } else {
             // if it is already existed tree nodes, then just increment the number in the
             // value

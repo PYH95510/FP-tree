@@ -5,30 +5,31 @@ import java.util.List;
 
 public class TreeNode {
 
-    String idName;
+    int name;
     List<TreeNode> children;
     TreeNode parent;
     TreeNode next;
+    TreeNode prev;
     long count;
 
     public TreeNode() {
-        this.idName = null;
+        this.name = 0;
         this.count = -1;
         children = new ArrayList<TreeNode>();
         next = null;
         parent = null;
     }
 
-    public TreeNode(String idName) {
-        this.idName = idName;
+    public TreeNode(int name) {
+        this.name = name;
         this.count = 1;
         children = new ArrayList<TreeNode>();
         next = null;
         parent = null;
     }
 
-    public TreeNode(String idName, long count) {
-        this.idName = idName;
+    public TreeNode(int name, long count) {
+        this.name = name;
         this.count = count;
         children = new ArrayList<TreeNode>();
         next = null;
@@ -59,15 +60,15 @@ public class TreeNode {
         return children.get(index);
     }
 
-    public int hasChild(String idName) {
+    public int hasChild(int name) {
         for (int i = 0; i < children.size(); i++)
-            if (children.get(i).idName.equals(idName))
+            if (children.get(i).name == (name))
                 return i;
         return -1;
     }
 
     public String toString() {
-        return "id: " + idName + " count: " + count +
+        return "name: " + name + " count: " + count +
                 +children.size();
     }
 }
