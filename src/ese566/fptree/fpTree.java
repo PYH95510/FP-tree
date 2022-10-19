@@ -16,10 +16,18 @@ public class fpTree {
     }
 
     public void generateTree(DataSet item) {
+<<<<<<< HEAD
         if (tree.size() == 0) {
 
             for (HashMap.Entry<Integer, ArrayList<Integer>> ent : item.m_transactions.entrySet()) {
 
+=======
+        TreeNode tree = new TreeNode();
+        for(int i = 0; i < item.m_transactions.size() ; i++){
+            
+            for(int j = 0; j< ; j++){ //second iteration loop
+                
+>>>>>>> main
             }
         }
 
