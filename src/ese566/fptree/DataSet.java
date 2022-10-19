@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Set;
 
 public class DataSet {
-    private HashMap<Integer, Integer> m_attribCount;
+    public HashMap<Integer, Integer> m_attribCount;
     public HashMap<Integer, ArrayList<Integer>> m_transactions;
 
     public DataSet(
@@ -53,9 +54,8 @@ public class DataSet {
         return this.m_attribCount.size();
     }
 
-    public int gettransacValueSize(){
-        
-        return
+    public Set<Integer> getKeytransaction() {
+        return this.m_transactions.keySet();
     }
 
     @Override

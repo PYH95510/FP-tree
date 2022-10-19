@@ -1,4 +1,5 @@
 package ese566.fptree;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -20,7 +21,7 @@ public class DataReader {
 			String line;
 			String tokens = ",";
 			int curTransactionID = -1;
-			
+
 			reader.readLine();// ignore 0
 			line = reader.readLine();
 			while (line != null) {
@@ -32,8 +33,7 @@ public class DataReader {
 					transactionIDStr = transactionIDStr.replace("\"", "");
 					curTransactionID = Integer.parseInt(transactionIDStr);
 					transactions.put(curTransactionID, new ArrayList<Integer>());
-				}
-				else if (typeStr.equals("V")) { // If line is an item for a transaction ("V")
+				} else if (typeStr.equals("V")) { // If line is an item for a transaction ("V")
 					if (curTransactionID < 0) {
 						// This shouldn't happen. All "V" should always come after "C" and therefore
 						// curTransactionID should always be initialized
