@@ -40,6 +40,11 @@ public class FPTree
         return fpTree;
     }
 
+    public void prune(int minimumSupport)
+    {
+        root.pruneChildren(minimumSupport);
+    }
+
     public void printName(StringBuilder sb)
     {
         root.printName(sb, 0);

@@ -9,6 +9,7 @@ public class App
         DataSet dataSet = DataReader.readNetDFile("/devel/FP-tree/data/anonymous-msweb.data");
         // System.out.println(dataSet.toString());
         FPTree fpTree = FPTree.generateTree(dataSet);
+        fpTree.prune(10);
         StringBuilder sb = new StringBuilder();
         fpTree.printName(sb);
         System.out.println(sb.toString());

@@ -88,6 +88,24 @@ public class TreeNode {
         }
     }
 
+    public void pruneChildren(int minimumSupport)
+    {
+        HashMap<Integer, TreeNode> tempChildrens = (HashMap<Integer, TreeNode>)children.clone();
+        for (int childKey: children.keySet())
+        {
+            TreeNode childNode = children.get(childKey);
+            if (childNode.count < minimumSupport)
+            {
+                tempChildrens.remove(childKey);
+            }
+            else
+            {
+                childNode.pruneChildren(minimumSupport);
+            }
+        }
+        children = tempChildrens;
+    }
+
     public int getSize() {
         return this.size;
     }
