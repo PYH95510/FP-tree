@@ -1,12 +1,13 @@
 package ese566.fptree;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class TreeNode {
 
     int name;
-    List<TreeNode> children;
+    HashMap<Integer, TreeNode> children;
     List<TreeNode> paths;
     TreeNode parent;
     TreeNode next;
@@ -17,8 +18,8 @@ public class TreeNode {
     public TreeNode() {
         this.name = 0;
         this.count = 1;
-        children = new ArrayList<TreeNode>();
-        paths = new ArrayList<TreeNode>();
+        children = new HashMap<Integer, TreeNode>();
+        paths = new ArrayList<TreeNode>(); // root node
         next = null;
         parent = null;
         size = 0;
@@ -28,7 +29,7 @@ public class TreeNode {
     public TreeNode(int name) {
         this.name = name;
         this.count = 1;
-        children = new ArrayList<TreeNode>();
+        children = new HashMap<Integer, TreeNode>();
         paths = new ArrayList<TreeNode>();
         next = null;
         parent = null;
@@ -38,7 +39,7 @@ public class TreeNode {
     public TreeNode(int name, long count) {
         this.name = name;
         this.count = count;
-        children = new ArrayList<TreeNode>();
+        children = new HashMap<Integer, TreeNode>();
         paths = new ArrayList<TreeNode>();
         next = null;
         parent = null;

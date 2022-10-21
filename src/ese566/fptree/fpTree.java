@@ -33,22 +33,6 @@ public class fpTree {
                                                                                               // each key
             fpTree children = new fpTree();
             for (int j = 0; j++ < items.size(); j++) {
-                if (paths.size() == 0) {
-                    paths.add(new TreeNode(items.get(0))); // if path is 0 add ith node into paths
-                    fptree.addPath(paths);
-                } else if (!((TreeNode) paths).hasPath(items.get(0))) { // if it is not included in the path
-                    paths.add(new TreeNode(items.get(0)));
-                    fptree.addPath(paths);
-                } else if (((TreeNode) paths).hasPath(items.get(0)) == true) { // if it is already there, then just
-                                                                               // increment count
-                    int n = paths.indexOf(items.get(0));
-                    paths.get(n).addCount();
-                }
-                if (j > 0) { // if it is not the starting node
-                    if (fptree.hasChild(j) != -1) { // if there is child
-                        fptree.insert(j, fptree, paths);
-                    }
-                }
 
             }
         }
