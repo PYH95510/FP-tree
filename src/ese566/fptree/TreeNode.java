@@ -22,8 +22,6 @@ public class TreeNode {
 
         next = null;
         parent = null;
-        size = 0;
-
     }
 
     public TreeNode(int name) {
@@ -32,23 +30,20 @@ public class TreeNode {
         children = new HashMap<Integer, TreeNode>();
         next = null;
         parent = null;
-        size = 0;
     }
 
-    public TreeNode(int name, long count) {
-        this.name = name;
-        this.count = count;
-        children = new HashMap<Integer, TreeNode>();
-        next = null;
-        parent = null;
-        size = 0;
-    }
-
-    public TreeNode addChild(int item) {
-        if (children.containsKey(item)) {
-            return children.get(item);
-        } else {
+    public TreeNode addChild(int item, DataSet dataSet) 
+    {
+        if (children.containsKey(item)) 
+        {
+            TreeNode curNode = children.get(item);
+            curNode.count += 1;
+            return curNode;
+        } 
+        else 
+        {
             TreeNode newChild = new TreeNode(item);
+            newChild.size = dataSet.getAttribCount(item);
             children.put(item, newChild);
             return newChild;
         }
@@ -90,9 +85,7 @@ public class TreeNode {
             } else {
                 insert(index, root.next, node); // need method to add brother node
             }
-
         }
-
     }
 
     public int getSize() {
@@ -103,8 +96,22 @@ public class TreeNode {
         return this.name;
     }
 
-    public String toString() {
-        return "name: " + name + " count: " + count +
-                +children.size();
+    public String toString() 
+    {
+        return "- Name: " + name + " FP-count: " + count + " Frequency: " + size;
+    }
+
+    public void printName(StringBuilder sb, int depth)
+    {
+        for (int i = 0; i < depth; ++i)
+        {
+            sb.append("  ");
+        }
+        sb.append(toString() + "\n");
+
+        for (TreeNode childNode: children.values())
+        {
+            childNode.printName(sb, depth + 1);
+        }
     }
 }

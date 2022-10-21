@@ -50,8 +50,9 @@ public class DataSet {
 
     }
 
-    public int getattribcount() {
-        return this.m_attribCount.size();
+    public int getAttribCount(int attribId) 
+    {
+        return this.m_attribCount.getOrDefault(attribId, 0);
     }
 
     public Set<Integer> getKeytransaction() {
