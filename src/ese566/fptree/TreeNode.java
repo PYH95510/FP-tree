@@ -51,8 +51,9 @@ public class TreeNode {
         this.size++;
     }
 
-    public void addChild(TreeNode child) {
-        children.add(child);
+    public void addChild(int item, TreeNode child) {
+        child.parent = this;
+        children.put(item, child);
         size++;
     }
 
