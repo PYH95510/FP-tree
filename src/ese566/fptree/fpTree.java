@@ -15,7 +15,6 @@ public class fpTree {
     TreeNode fptree = new TreeNode(0);
 
     fpTree() {
-        HashMap<Integer, Integer> child = new HashMap<>();
 
     }
 
@@ -26,14 +25,14 @@ public class fpTree {
 
         Set<Integer> keysets = new HashSet<Integer>();
         keysets.addAll(input.getKeytransaction());
-        List<TreeNode> paths = new ArrayList<TreeNode>();
 
         for (int key : keysets) { // second iteration
             ArrayList<Integer> items = new ArrayList<Integer>(input.m_transactions.get(key)); // getting each value for
-                                                                                              // each key
-            fpTree children = new fpTree();
+            TreeNode curNode = fptree; // each key
             for (int j = 0; j++ < items.size(); j++) {
-
+                int itemId = items.get(j);
+                TreeNode nextNode = curNode.addChild(itemId);
+                curNode = nextNode;
             }
         }
 

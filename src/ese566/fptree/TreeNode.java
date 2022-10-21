@@ -8,7 +8,7 @@ public class TreeNode {
 
     int name;
     HashMap<Integer, TreeNode> children;
-    List<TreeNode> paths;
+
     TreeNode parent;
     TreeNode next;
     TreeNode prev;
@@ -19,7 +19,7 @@ public class TreeNode {
         this.name = 0;
         this.count = 1;
         children = new HashMap<Integer, TreeNode>();
-        paths = new ArrayList<TreeNode>(); // root node
+
         next = null;
         parent = null;
         size = 0;
@@ -30,7 +30,6 @@ public class TreeNode {
         this.name = name;
         this.count = 1;
         children = new HashMap<Integer, TreeNode>();
-        paths = new ArrayList<TreeNode>();
         next = null;
         parent = null;
         size = 0;
@@ -40,21 +39,19 @@ public class TreeNode {
         this.name = name;
         this.count = count;
         children = new HashMap<Integer, TreeNode>();
-        paths = new ArrayList<TreeNode>();
         next = null;
         parent = null;
         size = 0;
     }
 
-    public void addPath(List<TreeNode> paths) {
-        this.paths = paths;
-        this.size++;
-    }
-
-    public void addChild(int item, TreeNode child) {
-        child.parent = this;
-        children.put(item, child);
-        size++;
+    public TreeNode addChild(int item) {
+        if (children.containsKey(item)) {
+            return children.get(item);
+        } else {
+            TreeNode newChild = new TreeNode(item);
+            children.put(item, newChild);
+            return newChild;
+        }
     }
 
     public void addCount(int count) {
@@ -82,15 +79,6 @@ public class TreeNode {
             if (children.get(i).name == (name))
                 return i;
         return -1;
-    }
-
-    public boolean hasPath(int item) {
-        for (int i = 0; i < this.paths.size(); i++) {
-            if (this.paths.get(i).name == item) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public void insert(int index, TreeNode root, List<TreeNode> node) {

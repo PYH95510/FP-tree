@@ -55,6 +55,7 @@ public class DataSet {
     }
 
     public Set<Integer> getKeytransaction() {
+        sortTransactions();
         return this.m_transactions.keySet();
     }
 
