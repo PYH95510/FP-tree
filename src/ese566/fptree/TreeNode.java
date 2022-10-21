@@ -32,16 +32,12 @@ public class TreeNode {
         parent = null;
     }
 
-    public TreeNode addChild(int item, DataSet dataSet) 
-    {
-        if (children.containsKey(item)) 
-        {
+    public TreeNode addChild(int item, DataSet dataSet) {
+        if (children.containsKey(item)) {
             TreeNode curNode = children.get(item);
             curNode.count += 1;
             return curNode;
-        } 
-        else 
-        {
+        } else {
             TreeNode newChild = new TreeNode(item);
             newChild.size = dataSet.getAttribCount(item);
             children.put(item, newChild);
@@ -88,18 +84,13 @@ public class TreeNode {
         }
     }
 
-    public void pruneChildren(int minimumSupport)
-    {
-        HashMap<Integer, TreeNode> tempChildrens = (HashMap<Integer, TreeNode>)children.clone();
-        for (int childKey: children.keySet())
-        {
+    public void pruneChildren(int minimumSupport) {
+        HashMap<Integer, TreeNode> tempChildrens = (HashMap<Integer, TreeNode>) children.clone();
+        for (int childKey : children.keySet()) {
             TreeNode childNode = children.get(childKey);
-            if (childNode.count < minimumSupport)
-            {
+            if (childNode.count < minimumSupport) {
                 tempChildrens.remove(childKey);
-            }
-            else
-            {
+            } else {
                 childNode.pruneChildren(minimumSupport);
             }
         }
@@ -114,21 +105,17 @@ public class TreeNode {
         return this.name;
     }
 
-    public String toString() 
-    {
+    public String toString() {
         return "- Name: " + name + " FP-count: " + count + " Frequency: " + size;
     }
 
-    public void printName(StringBuilder sb, int depth)
-    {
-        for (int i = 0; i < depth; ++i)
-        {
+    public void printName(StringBuilder sb, int depth) {
+        for (int i = 0; i < depth; ++i) {
             sb.append("  ");
         }
         sb.append(toString() + "\n");
 
-        for (TreeNode childNode: children.values())
-        {
+        for (TreeNode childNode : children.values()) {
             childNode.printName(sb, depth + 1);
         }
     }
