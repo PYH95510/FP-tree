@@ -12,7 +12,8 @@ import ese566.fptree.DataReader;
 public class FPTree {
     TreeNode root = new TreeNode(0);
 
-    FPTree() {
+    private FPTree() 
+    {
 
     }
 
@@ -22,10 +23,12 @@ public class FPTree {
     static public FPTree generateTree(DataSet input) {
         FPTree fpTree = new FPTree();
 
-        for (int key : input.getKeytransaction()) { // second iteration
+        for (int key : input.getKeytransaction()) 
+        { // second iteration
             ArrayList<Integer> items = new ArrayList<Integer>(input.m_transactions.get(key)); // getting each value for
             TreeNode curNode = fpTree.root; // each key
-            for (int j = 0; j < items.size(); j++) {
+            for (int j = 0; j < items.size(); j++) 
+            {
                 int itemId = items.get(j);
                 TreeNode nextNode = curNode.addChild(itemId, input);
                 curNode = nextNode;
@@ -37,6 +40,11 @@ public class FPTree {
 
     public void prune(int minimumSupport) {
         root.pruneChildren(minimumSupport);
+    }
+
+    public void buildTable(HashMap<Integer, TreeNode> table, HashMap<Integer, Integer> support)
+    {
+        root.buildTable(table, support);
     }
 
     public void printName(StringBuilder sb) {
