@@ -50,8 +50,7 @@ public class DataSet {
 
     }
 
-    public int getAttribCount(int attribId) 
-    {
+    public int getAttribCount(int attribId) {
         return this.m_attribCount.getOrDefault(attribId, 0);
     }
 
