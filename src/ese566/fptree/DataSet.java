@@ -71,6 +71,24 @@ public class DataSet {
         return prunedItemIds.iterator();
     }
 
+    public float getConfidence(ArrayList<Integer> itemSet)
+    {
+        int denominator = 0;
+        int numerator = 0;
+        for (ArrayList<Integer> transactions: m_transactions.values())
+        {
+            if (transactions.contains(itemSet.get(0)))
+            {
+                denominator += 1;
+                if (transactions.containsAll(itemSet))
+                {
+                    numerator += 1;
+                }
+            }
+        }
+        return numerator / (float)denominator;
+    }
+
     public int gettransaction() {
         return this.m_transactions.size();
 

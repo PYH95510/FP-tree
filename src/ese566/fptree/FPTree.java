@@ -109,9 +109,12 @@ public class FPTree
 
             // Print the result
             StringBuilder sb = new StringBuilder();
-            sb.append("[");
             for (var entry : entries)
             {
+                if (entry.size() <= 1)
+                {
+                    continue;
+                }
                 sb.append("[");
                 for (int i = 0; i < entry.size(); ++i)
                 {
@@ -123,10 +126,9 @@ public class FPTree
                         sb.append(entry.get(i));
                     }
                 }
-                sb.append("]");
+                sb.append("] Confidence:" + m_dataset.getConfidence(entry) + "\n");
             }
-            sb.append("]");
-            System.out.println(itemId + " " + sb.toString());
+            System.out.print(sb.toString());
         }
     }
 

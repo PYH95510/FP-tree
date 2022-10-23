@@ -1,4 +1,5 @@
 package ese566.fptree;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import ese566.fptree.DataReader;
@@ -16,6 +17,6 @@ public class App
         fpTree.printName(sb);
         System.out.println(sb.toString());
 
-        fpTree.extractPattern(200);
+        fpTree.extractPattern(220);
     }    
 }
