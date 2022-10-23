@@ -1,17 +1,21 @@
 package ese566.fptree;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import ese566.fptree.DataReader;
 
 public class FPTree 
 {
-    TreeNode root = new TreeNode(0);
+    private TreeNode root = new TreeNode(0);
+    private DataSet m_dataset;
+    private HashMap<Integer, TreeNode> m_table = new HashMap<Integer, TreeNode>();
 
     private FPTree() 
     {
@@ -21,18 +25,21 @@ public class FPTree
     /**
      * @param item
      */
-    static public FPTree create(DataSet input, HashMap<Integer, TreeNode> table) 
+    static public FPTree create(DataSet input) 
     {
         FPTree fpTree = new FPTree();
+        fpTree.m_dataset = input;
 
         for (int key : input.getKeytransaction()) 
-        { // second iteration
+        { 
+            // second iteration
             ArrayList<Integer> items = new ArrayList<Integer>(input.m_transactions.get(key)); // getting each value for
-            TreeNode curNode = fpTree.root; // each key
+            TreeNode curNode = fpTree.root; 
+            // each key
             for (int j = 0; j < items.size(); j++) 
             {
                 int itemId = items.get(j);
-                TreeNode nextNode = curNode.addChild(itemId, input);
+                TreeNode nextNode = curNode.addChild(itemId, input, fpTree.m_table);
                 curNode = nextNode;
             }
         }
@@ -45,9 +52,81 @@ public class FPTree
         root.pruneChildren(minimumSupport);
     }
 
-    public void buildTable(HashMap<Integer, TreeNode> table, HashMap<Integer, Integer> support)
+    public void extractPattern(int minSupport)
     {
-        root.buildTable(table, support);
+        for (var iter = m_dataset.iterateFromMinSupport(minSupport); iter.hasNext();)
+        {
+            HashMap<Integer, Integer> condTable = new HashMap<>();
+            Integer itemId = iter.next();
+            TreeNode curNode = m_table.getOrDefault(itemId, null);
+            while (curNode != null)
+            {
+                condTable.put(itemId, condTable.getOrDefault(itemId, 0) + 1);
+                TreeNode curParentNode = curNode.getParent();
+                while (true)
+                {
+                    if (curParentNode.isRoot())
+                    {
+                        break;
+                    }
+                    condTable.put(curParentNode.getName(), condTable.getOrDefault(curParentNode.getName(), 0) + 1);
+                    curParentNode = curParentNode.getParent();
+                }
+
+                curNode = curNode.getNext();
+            }
+
+            // Re-iterate the tree to gather the entries that have higher support than the minimum
+            ArrayList<ArrayList<Integer>> entries = new ArrayList<>(); 
+            curNode = m_table.getOrDefault(itemId, null);
+            while (curNode != null)
+            {
+                ArrayList<Integer> entry = new ArrayList<>();
+                entry.add(curNode.getName());
+
+                TreeNode curParentNode = curNode.getParent();
+                while (true)
+                {
+                    if (curParentNode.isRoot())
+                    {
+                        break;
+                    }
+                    
+                    if (condTable.getOrDefault(curParentNode.getName(), 0) >= minSupport)
+                    {
+                        entry.add(curParentNode.getName());
+                    }
+                    curParentNode = curParentNode.getParent();
+                }
+                // Only add if there are more than 1 item in the frequent set
+                if (entry.size() > 1)
+                {
+                    entries.add(entry);
+                }
+
+                curNode = curNode.getNext();
+            }
+
+            StringBuilder sb = new StringBuilder();
+            sb.append("[");
+            for (var entry : entries)
+            {
+                sb.append("[");
+                for (int i = 0; i < entry.size(); ++i)
+                {
+                    if (i != entry.size() - 1)
+                    {
+                        sb.append(entry.get(i) + ", ");
+                    } else
+                    {
+                        sb.append(entry.get(i));
+                    }
+                }
+                sb.append("]");
+            }
+            sb.append("]");
+            System.out.println(itemId + " " + sb.toString());
+        }
     }
 
     public void printName(StringBuilder sb) 

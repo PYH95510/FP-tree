@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class DataSet 
 {
@@ -52,13 +54,43 @@ public class DataSet
         }
     }
 
+    public Iterator<Integer> iterateFromMinSupport(int minSupport)
+    {
+        // Create a sorted set that sorts based on the support of the item ID
+        var prunedItemIds = new TreeSet<Integer>(new Comparator<Integer>()
+        {
+            @Override
+            public int compare(Integer arg0, Integer arg1)
+            {
+                int arg0Support = m_supports.get(arg0);
+                int arg1Support = m_supports.get(arg1);
+                // Tie-breaker
+                if (arg0Support == arg1Support)
+                {
+                    return arg0 - arg1;
+                }
+                // Note that we need to sort in ascending order
+                return arg0Support - arg1Support;
+            }
+        });
+        // Remove items that does not meet the minimum support requirement
+        for (Integer itemId : m_supports.keySet())
+        {
+            if (m_supports.getOrDefault(itemId, 0) >= minSupport)
+            {
+                prunedItemIds.add(itemId);
+            }
+        }
+        return prunedItemIds.iterator();
+    }
+
     public int gettransaction() 
     {
         return this.m_transactions.size();
 
     }
 
-    public int getAttribCount(int attribId) 
+    public int getSupport(int attribId) 
     {
         return this.m_supports.getOrDefault(attribId, 0);
     }

@@ -11,7 +11,6 @@ public class TreeNode
     private TreeNode m_parent;
     private TreeNode m_next;
     private long m_count;
-    private int m_size;
 
     public TreeNode() 
     {
@@ -32,23 +31,49 @@ public class TreeNode
         m_parent = null;
     }
 
-    public TreeNode addChild(int item, DataSet dataSet) 
+    public TreeNode addChild(int itemId, DataSet dataSet, HashMap<Integer, TreeNode> table) 
     {
-        if (m_children.containsKey(item)) 
+        if (m_children.containsKey(itemId)) 
         {
-            TreeNode curNode = m_children.get(item);
+            TreeNode curNode = m_children.get(itemId);
             curNode.m_count += 1;
             return curNode;
-        } 
-        else 
+        } else 
         {
-            TreeNode newChild = new TreeNode(item);
-            newChild.m_size = dataSet.getAttribCount(item);
-            m_children.put(item, newChild);
+            TreeNode newChild = new TreeNode(itemId);
+            newChild.m_parent = this;
+            m_children.put(itemId, newChild);
+            if (table.containsKey(itemId))
+            {
+                // Insert into the singly-linked list
+                newChild.m_next = table.get(itemId);
+                table.put(itemId, newChild);
+            } else
+            {
+                // Create a new table entry
+                newChild.m_next = null;
+                table.put(itemId, newChild);
+            }
             return newChild;
         }
     }
 
+    public TreeNode getNext()
+    {
+        return m_next;
+    }
+
+    public TreeNode getParent()
+    {
+        return m_parent;
+    }
+
+    public boolean isRoot()
+    {
+        return m_name == 0;
+    }
+
+    /*
     public void addCount(int count) 
     {
         this.m_count += count;
@@ -94,7 +119,7 @@ public class TreeNode
             }
         }
     }
-
+    */
     public void pruneChildren(int minimumSupport) 
     {
         HashMap<Integer, TreeNode> tempChildrens = (HashMap<Integer, TreeNode>) m_children.clone();
@@ -113,11 +138,6 @@ public class TreeNode
         m_children = tempChildrens;
     }
 
-    public int getSize() 
-    {
-        return this.m_size;
-    }
-
     public int getName() 
     {
         return this.m_name;
@@ -125,7 +145,7 @@ public class TreeNode
 
     public String toString() 
     {
-        return "Name: " + m_name + " FP-count: " + m_count + " Frequency: " + m_size;
+        return "Name: " + m_name + " Node count: " + m_count;
     }
 
     public void printName(StringBuilder sb, int depth) 
@@ -141,6 +161,7 @@ public class TreeNode
         }
     }
 
+    /*
     public void buildTable(HashMap<Integer, TreeNode> table, HashMap<Integer, Integer> support)
     {
         if (!table.containsKey(m_name))
@@ -161,4 +182,5 @@ public class TreeNode
             childNode.buildTable(table, support);
         }
     }
+    */
 }
