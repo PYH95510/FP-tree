@@ -21,7 +21,7 @@ public class FPTree
     /**
      * @param item
      */
-    static public FPTree generateTree(DataSet input) 
+    static public FPTree create(DataSet input, HashMap<Integer, TreeNode> table) 
     {
         FPTree fpTree = new FPTree();
 
