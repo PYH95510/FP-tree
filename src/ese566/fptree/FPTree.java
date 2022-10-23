@@ -77,7 +77,7 @@ public class FPTree
             }
 
             // Re-iterate the tree to gather the entries that have higher support than the minimum
-            ArrayList<ArrayList<Integer>> entries = new ArrayList<>(); 
+            HashSet<ArrayList<Integer>> entries = new HashSet<>(); 
             curNode = m_table.getOrDefault(itemId, null);
             while (curNode != null)
             {
@@ -107,6 +107,7 @@ public class FPTree
                 curNode = curNode.getNext();
             }
 
+            // Print the result
             StringBuilder sb = new StringBuilder();
             sb.append("[");
             for (var entry : entries)
