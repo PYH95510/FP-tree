@@ -12,7 +12,7 @@ public class DataReader
 	public static DataSet readNetDFile(String fileName) 
 	{
 		// <Attribute ID, Count>
-		HashMap<Integer, Integer> attribCount = new HashMap<Integer, Integer>();
+		HashMap<Integer, Integer> supports = new HashMap<Integer, Integer>();
 		// <Transaction ID, <Attribute ID>>
 		HashMap<Integer, ArrayList<Integer>> transactions = new HashMap<>();
 
@@ -51,7 +51,7 @@ public class DataReader
 					}
 					// Attribute ID
 					int attribID = Integer.parseInt(st.nextToken());
-					attribCount.put(attribID, attribCount.getOrDefault(attribID, 0) + 1);
+					supports.put(attribID, supports.getOrDefault(attribID, 0) + 1);
 
 					var itemset = transactions.get(curTransactionID);
 					itemset.add(attribID);
@@ -74,7 +74,7 @@ public class DataReader
 		}
 		if (complete) 
 		{
-			return new DataSet(attribCount, transactions);
+			return new DataSet(supports, transactions);
 		} else 
 		{
 			return null;

@@ -8,14 +8,14 @@ import java.util.Set;
 
 public class DataSet 
 {
-    public HashMap<Integer, Integer> m_attribCount;
+    public HashMap<Integer, Integer> m_supports;
     public HashMap<Integer, ArrayList<Integer>> m_transactions;
 
     public DataSet(
-            HashMap<Integer, Integer> attribCount,
+            HashMap<Integer, Integer> supports,
             HashMap<Integer, ArrayList<Integer>> transactions) 
     {
-        m_attribCount = attribCount;
+        m_supports = supports;
         m_transactions = transactions;
     }
 
@@ -32,8 +32,8 @@ public class DataSet
                     // If the attribute ID isn't in the list, then use -1 as the count. This
                     // shouldn't happen
                     // but is included for robustness
-                    int arg0Count = m_attribCount.getOrDefault(arg0, -1);
-                    int arg1Count = m_attribCount.getOrDefault(arg1, -1);
+                    int arg0Count = m_supports.getOrDefault(arg0, -1);
+                    int arg1Count = m_supports.getOrDefault(arg1, -1);
 
                     // Tie-breaker. If both counts are the same, then compare them by the IDs
                     if (arg0Count == arg1Count) 
@@ -60,7 +60,7 @@ public class DataSet
 
     public int getAttribCount(int attribId) 
     {
-        return this.m_attribCount.getOrDefault(attribId, 0);
+        return this.m_supports.getOrDefault(attribId, 0);
     }
 
     public Set<Integer> getKeytransaction() 
@@ -85,7 +85,7 @@ public class DataSet
             while (itemsetIter.hasNext()) 
             {
                 int itemID = itemsetIter.next();
-                line += itemID + "(" + m_attribCount.getOrDefault(itemID, -1) + ") ";
+                line += itemID + "(" + m_supports.getOrDefault(itemID, -1) + ") ";
             }
             line += "\n";
             sb.append(line);
