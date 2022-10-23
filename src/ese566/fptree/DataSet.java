@@ -6,23 +6,29 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Set;
 
-public class DataSet {
+public class DataSet 
+{
     public HashMap<Integer, Integer> m_attribCount;
     public HashMap<Integer, ArrayList<Integer>> m_transactions;
 
     public DataSet(
             HashMap<Integer, Integer> attribCount,
-            HashMap<Integer, ArrayList<Integer>> transactions) {
+            HashMap<Integer, ArrayList<Integer>> transactions) 
+    {
         m_attribCount = attribCount;
         m_transactions = transactions;
     }
 
-    public void sortTransactions() {
-        for (var kvPair : m_transactions.entrySet()) {
+    public void sortTransactions() 
+    {
+        for (var kvPair : m_transactions.entrySet()) 
+        {
             var itemSet = kvPair.getValue();
-            Collections.sort(itemSet, new Comparator<Integer>() {
+            Collections.sort(itemSet, new Comparator<Integer>() 
+            {
                 @Override
-                public int compare(Integer arg0, Integer arg1) {
+                public int compare(Integer arg0, Integer arg1) 
+                {
                     // If the attribute ID isn't in the list, then use -1 as the count. This
                     // shouldn't happen
                     // but is included for robustness
@@ -30,7 +36,8 @@ public class DataSet {
                     int arg1Count = m_attribCount.getOrDefault(arg1, -1);
 
                     // Tie-breaker. If both counts are the same, then compare them by the IDs
-                    if (arg0Count == arg1Count) {
+                    if (arg0Count == arg1Count) 
+                    {
                         return arg1 - arg0;
                     }
                     // Note that the return value doesn't have to be {-1, 0, 1}. Returning any
@@ -45,7 +52,8 @@ public class DataSet {
         }
     }
 
-    public int gettransaction() {
+    public int gettransaction() 
+    {
         return this.m_transactions.size();
 
     }
@@ -55,23 +63,27 @@ public class DataSet {
         return this.m_attribCount.getOrDefault(attribId, 0);
     }
 
-    public Set<Integer> getKeytransaction() {
+    public Set<Integer> getKeytransaction() 
+    {
         sortTransactions();
         return this.m_transactions.keySet();
     }
 
     @Override
-    public String toString() {
+    public String toString() 
+    {
         StringBuilder sb = new StringBuilder();
         var transIter = m_transactions.entrySet().iterator();
-        while (transIter.hasNext()) {
+        while (transIter.hasNext()) 
+        {
             var kvPair = transIter.next();
             int transactionID = kvPair.getKey();
             var items = kvPair.getValue();
             String line = String.format("Transaction ID %s: ", transactionID);
 
             var itemsetIter = items.iterator();
-            while (itemsetIter.hasNext()) {
+            while (itemsetIter.hasNext()) 
+            {
                 int itemID = itemsetIter.next();
                 line += itemID + "(" + m_attribCount.getOrDefault(itemID, -1) + ") ";
             }

@@ -13,7 +13,8 @@ public class TreeNode
     private long m_count;
     private int m_size;
 
-    public TreeNode() {
+    public TreeNode() 
+    {
         this.m_name = 0;
         this.m_count = 1;
         m_children = new HashMap<Integer, TreeNode>();
@@ -22,7 +23,8 @@ public class TreeNode
         m_parent = null;
     }
 
-    public TreeNode(int name) {
+    public TreeNode(int name) 
+    {
         this.m_name = name;
         this.m_count = 1;
         m_children = new HashMap<Integer, TreeNode>();
@@ -30,12 +32,16 @@ public class TreeNode
         m_parent = null;
     }
 
-    public TreeNode addChild(int item, DataSet dataSet) {
-        if (m_children.containsKey(item)) {
+    public TreeNode addChild(int item, DataSet dataSet) 
+    {
+        if (m_children.containsKey(item)) 
+        {
             TreeNode curNode = m_children.get(item);
             curNode.m_count += 1;
             return curNode;
-        } else {
+        } 
+        else 
+        {
             TreeNode newChild = new TreeNode(item);
             newChild.m_size = dataSet.getAttribCount(item);
             m_children.put(item, newChild);
@@ -43,34 +49,41 @@ public class TreeNode
         }
     }
 
-    public void addCount(int count) {
+    public void addCount(int count) 
+    {
         this.m_count += count;
     }
 
-    public void addCount() {
+    public void addCount() 
+    {
         this.m_count += 1;
     }
 
-    public void setNextNode(TreeNode next) {
+    public void setNextNode(TreeNode next) 
+    {
         this.m_next = next;
     }
 
-    public void setParent(TreeNode parent) {
+    public void setParent(TreeNode parent) 
+    {
         this.m_parent = parent;
     }
 
-    public TreeNode getChilde(int index) {
+    public TreeNode getChilde(int index) 
+    {
         return m_children.get(index);
     }
 
-    public int hasChild(int name) {
+    public int hasChild(int name) 
+    {
         for (int i = 0; i < m_children.size(); i++)
             if (m_children.get(i).m_name == (name))
                 return i;
         return -1;
     }
 
-    public void insert(int index, TreeNode root, List<TreeNode> node) {
+    public void insert(int index, TreeNode root, List<TreeNode> node) 
+    {
         if (root.m_next == null) {
             root.m_next = node.get(index);
         } else {
@@ -100,19 +113,23 @@ public class TreeNode
         m_children = tempChildrens;
     }
 
-    public int getSize() {
+    public int getSize() 
+    {
         return this.m_size;
     }
 
-    public int getName() {
+    public int getName() 
+    {
         return this.m_name;
     }
 
-    public String toString() {
+    public String toString() 
+    {
         return "Name: " + m_name + " FP-count: " + m_count + " Frequency: " + m_size;
     }
 
-    public void printName(StringBuilder sb, int depth) {
+    public void printName(StringBuilder sb, int depth) 
+    {
         for (int i = 0; i < depth; ++i)
         {
             sb.append("  ");

@@ -9,7 +9,8 @@ import java.util.Set;
 
 import ese566.fptree.DataReader;
 
-public class FPTree {
+public class FPTree 
+{
     TreeNode root = new TreeNode(0);
 
     private FPTree() 
@@ -20,7 +21,8 @@ public class FPTree {
     /**
      * @param item
      */
-    static public FPTree generateTree(DataSet input) {
+    static public FPTree generateTree(DataSet input) 
+    {
         FPTree fpTree = new FPTree();
 
         for (int key : input.getKeytransaction()) 
@@ -38,7 +40,8 @@ public class FPTree {
         return fpTree;
     }
 
-    public void prune(int minimumSupport) {
+    public void prune(int minimumSupport) 
+    {
         root.pruneChildren(minimumSupport);
     }
 
@@ -47,7 +50,8 @@ public class FPTree {
         root.buildTable(table, support);
     }
 
-    public void printName(StringBuilder sb) {
+    public void printName(StringBuilder sb) 
+    {
         root.printName(sb, 0);
     }
 }
